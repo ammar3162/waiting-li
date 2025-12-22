@@ -8,15 +8,10 @@
 
   <style>
     :root{
-      --bg:#070607;
-      --card:#0d0a0b;
-      --stroke: rgba(255,255,255,.10);
       --text:#f7f4f5;
       --muted: rgba(255,255,255,.70);
       --gold:#d6b56b;
-      --burg:#5a0f1d;
-      --burg2:#3b0a12;
-      --white:#ffffff;
+      --stroke: rgba(255,255,255,.12);
       --shadow: 0 25px 60px rgba(0,0,0,.55);
       --radius: 22px;
     }
@@ -24,470 +19,213 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Tahoma, Arial;
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial;
       color:var(--text);
       background:
         radial-gradient(1200px 700px at 20% 10%, rgba(90,15,29,.55), transparent 55%),
         radial-gradient(1000px 650px at 85% 25%, rgba(214,181,107,.20), transparent 60%),
-        radial-gradient(900px 700px at 50% 95%, rgba(90,15,29,.35), transparent 55%),
         linear-gradient(180deg, #050405 0%, #070607 100%);
       min-height:100vh;
     }
 
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:1100px; margin:0 auto; padding:28px 16px 56px}
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:18px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      padding:10px 12px;
-      border:1px solid var(--stroke);
-      border-radius:999px;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      backdrop-filter: blur(10px);
-    }
+    .wrap{max-width:1100px;margin:auto;padding:36px 16px}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:30px}
     .logo{
-      width:36px; height:36px; border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, var(--gold), rgba(214,181,107,.25) 55%, rgba(90,15,29,.55) 100%);
-      box-shadow: 0 10px 25px rgba(214,181,107,.15);
-      border:1px solid rgba(214,181,107,.35);
+      width:42px;height:42px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, var(--gold), rgba(214,181,107,.25));
+      border:1px solid rgba(214,181,107,.4)
     }
-    .brand b{letter-spacing:.20em}
-    .brand small{display:block; color:var(--muted); margin-top:2px}
+    .brand b{letter-spacing:.25em;font-size:18px}
 
-    .admin-link{
-      padding:10px 14px;
-      border:1px solid rgba(214,181,107,.30);
-      border-radius:999px;
-      background: linear-gradient(180deg, rgba(214,181,107,.14), rgba(214,181,107,.05));
-      box-shadow: 0 12px 30px rgba(214,181,107,.08);
-      font-weight:700;
-      color:var(--text);
-    }
-    .admin-link:hover{transform:translateY(-1px)}
-    .grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-    }
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
 
-    .hero{
+    .hero,.card{
       border:1px solid var(--stroke);
       border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-      padding:22px;
-      position:relative;
-      overflow:hidden;
-      backdrop-filter: blur(12px);
-    }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(500px 260px at 25% 15%, rgba(214,181,107,.18), transparent 60%),
-        radial-gradient(520px 300px at 80% 15%, rgba(90,15,29,.40), transparent 60%),
-        radial-gradient(520px 360px at 40% 90%, rgba(214,181,107,.10), transparent 62%);
-      pointer-events:none;
-      filter: blur(0px);
-    }
-    .hero > *{position:relative}
-
-    .headline{
-      font-size: clamp(24px, 3.1vw, 38px);
-      margin:0 0 10px;
-      line-height:1.25;
-      letter-spacing:.02em;
-    }
-    .sub{
-      margin:0 0 16px;
-      color:var(--muted);
-      line-height:1.75;
-      max-width: 62ch;
-    }
-    .badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
-    .badge{
-      border:1px solid rgba(214,181,107,.28);
-      background: rgba(214,181,107,.08);
-      color:var(--text);
-      padding:8px 10px;
-      border-radius:999px;
-      font-weight:700;
-      font-size:13px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      padding:26px;
+      backdrop-filter:blur(12px)
     }
 
-    .card{
-      border:1px solid var(--stroke);
-      border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-      padding:22px;
-      backdrop-filter: blur(12px);
-    }
+    .hero h1{font-size:clamp(26px,3vw,38px);margin:0 0 14px}
+    .hero p{color:var(--muted);line-height:1.9;max-width:60ch}
 
-    .card h2{
-      margin:0 0 10px;
-      font-size:18px;
-      letter-spacing:.02em;
-    }
-    .card p.note{
-      margin:0 0 18px;
-      color:var(--muted);
-      line-height:1.7;
-      font-size:14px;
-    }
+    h2{margin:0 0 16px;font-size:18px}
 
-    .form{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 640px){
-      .form{grid-template-columns:1fr}
-    }
+    .form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:640px){.form{grid-template-columns:1fr}}
 
-    label{
-      display:block;
-      font-size:13px;
-      color:rgba(255,255,255,.78);
-      margin-bottom:7px;
-    }
+    label{font-size:13px;margin-bottom:6px;display:block}
     .field{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(6,5,6,.55);
-      border-radius:16px;
-      padding:12px 12px;
-      color:var(--text);
-      outline:none;
       width:100%;
-      transition:.2s;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(6,5,6,.55);
+      color:var(--text)
     }
     .field:focus{
-      border-color: rgba(214,181,107,.55);
-      box-shadow: 0 0 0 4px rgba(214,181,107,.12);
+      outline:none;
+      border-color:rgba(214,181,107,.6);
+      box-shadow:0 0 0 3px rgba(214,181,107,.15)
     }
-    textarea.field{min-height: 92px; resize:vertical}
-    .span2{grid-column: span 2}
-    @media (max-width: 640px){ .span2{grid-column: span 1} }
+    textarea.field{min-height:90px}
+    .span2{grid-column:span 2}
+    @media(max-width:640px){.span2{grid-column:span 1}}
 
     .terms{
-      margin-top:14px;
-      padding:14px;
-      border-radius:18px;
-      border:1px dashed rgba(214,181,107,.35);
-      background: rgba(214,181,107,.06);
-      color:rgba(255,255,255,.86);
-      line-height:1.75;
-      font-size:14px;
-    }
-    .terms h3{
-      margin:0 0 10px;
-      font-size:15px;
-      color:var(--text);
-    }
-    .check{
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
-      margin-top:14px;
-      padding:12px;
+      margin-top:18px;
+      padding:16px;
       border-radius:16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(6,5,6,.50);
-    }
-    .check input{
-      width:18px; height:18px; margin-top:2px;
-      accent-color: var(--gold);
-    }
-    .check b{display:block; margin-bottom:4px}
-    .check small{color:var(--muted); line-height:1.7}
-
-    .actions{
-      display:flex;
-      gap:12px;
-      margin-top:16px;
-      flex-wrap:wrap;
+      border:1px dashed rgba(214,181,107,.35);
+      background:rgba(214,181,107,.06);
+      font-size:14px;
+      line-height:1.8
     }
 
+    .check{margin-top:16px;display:flex;gap:10px}
+    .check input{accent-color:var(--gold)}
+
+    .actions{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
     .btn{
       border:none;
-      border-radius: 999px;
-      padding:14px 18px;
+      border-radius:999px;
+      padding:14px 22px;
       font-weight:800;
-      cursor:pointer;
-      transition:.18s;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-height:46px;
-      letter-spacing:.01em;
+      cursor:pointer
     }
     .btn-primary{
-      background: linear-gradient(135deg, rgba(214,181,107,.95), rgba(214,181,107,.55));
+      background:linear-gradient(135deg, rgba(214,181,107,.95), rgba(214,181,107,.6));
       color:#1b1415;
-      box-shadow: 0 18px 40px rgba(214,181,107,.18);
+      box-shadow:0 18px 40px rgba(214,181,107,.2)
     }
-    .btn-primary:hover{transform: translateY(-1px)}
-    .btn-primary:disabled{
-      opacity:.55; cursor:not-allowed; transform:none;
-      box-shadow:none;
-    }
+    .btn-primary:disabled{opacity:.5}
     .btn-ghost{
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      color:var(--text);
-    }
-    .btn-ghost:hover{transform: translateY(-1px)}
-    .hint{
-      margin-top:12px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-    .footer{
-      margin-top:18px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      color: rgba(255,255,255,.50);
-      font-size:12px;
-    }
-    .pill{
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:999px;
-      padding:8px 10px;
-      background: rgba(255,255,255,.04);
+      background:transparent;
+      border:1px solid rgba(255,255,255,.25);
+      color:var(--text)
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand" aria-label="LANO">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <b>LANO</b>
-          <small>Table Reservation</small>
-        </div>
-      </div>
+<div class="wrap">
 
-      <a class="admin-link" href="./admin.html" rel="nofollow">لوحة الإدارة</a>
-    </div>
-
-    <div class="grid">
-      <section class="hero">
-        <h1 class="headline">احجز طاولتك واستمتع بتجربة راقية</h1>
-        <p class="sub">
-          تجربة حجز بسيطة وسريعة — نؤكد تفاصيل حجزك عبر واتساب خلال لحظات.
-          يرجى تعبئة البيانات بدقة لضمان أفضل خدمة.
-        </p>
-        <div class="badges">
-          <span class="badge">Minimal Luxury</span>
-          <span class="badge">متجاوب 100%</span>
-          <span class="badge">تأكيد عبر واتساب</span>
-          <span class="badge">LANO – تجربة 5 نجوم</span>
-        </div>
-
-        <div class="footer">
-          <div class="pill">اللون: خمري داكن • ذهبي ناعم • أبيض</div>
-          <div class="pill">مدة التأكيد: خلال دقائق</div>
-        </div>
-      </section>
-
-      <section class="card" aria-label="نموذج الحجز">
-        <h2>نموذج حجز الطاولة</h2>
-        <p class="note">املأ البيانات ثم اضغط “تأكيد الحجز عبر واتساب”.</p>
-
-        <form id="bookingForm" autocomplete="on">
-          <div class="form">
-            <div>
-              <label for="fullName">الاسم الكامل</label>
-              <input id="fullName" class="field" type="text" placeholder="مثال: محمد أحمد" required maxlength="60" />
-            </div>
-
-            <div>
-              <label for="phone">رقم الجوال</label>
-              <input id="phone" class="field" type="tel" inputmode="tel" placeholder="مثال: 05xxxxxxxx" required maxlength="20" />
-            </div>
-
-            <div>
-              <label for="guests">عدد الضيوف</label>
-              <input id="guests" class="field" type="number" min="1" max="30" value="2" required />
-            </div>
-
-            <div>
-              <label for="date">تاريخ الحجز</label>
-              <input id="date" class="field" type="date" required />
-            </div>
-
-            <div>
-              <label for="time">وقت الحجز</label>
-              <input id="time" class="field" type="time" required />
-            </div>
-
-            <div class="span2">
-              <label for="notes">ملاحظات / طلبات خاصة (اختياري)</label>
-              <textarea id="notes" class="field" placeholder="مثال: طاولة بالقرب من النافذة، مناسبة عائلية..."></textarea>
-            </div>
-          </div>
-
-          <div class="terms" aria-label="الشروط والأحكام">
-            <h3>الشروط والأحكام العامة – حجز الطاولات</h3>
-            <div>
-              يتم استقبال حجوزات الطاولات حسب توفر الأماكن في المطعم.<br><br>
-              يُرجى الالتزام بموعد الحجز، وفي حال التأخير لأكثر من 15 دقيقة دون إشعار مسبق، يحق لإدارة المطعم إلغاء الحجز.<br><br>
-              يمكن تعديل أو إلغاء الحجز قبل موعده بوقت كافٍ عبر نفس وسيلة الحجز أو التواصل مع المطعم.<br><br>
-              في حال عدم الحضور دون إلغاء مسبق، قد يتم تقييد إمكانية الحجز مستقبلاً.<br><br>
-              عدد الضيوف المحدد في الحجز يجب الالتزام به، وأي تغيير يخضع لتوفر الطاولات.<br><br>
-              يحق لإدارة المطعم إعادة ترتيب الجلسات بما يتناسب مع سير العمل.<br><br>
-              المطعم غير مسؤول عن فقدان أو تلف المقتنيات الشخصية داخل الموقع.<br><br>
-              باستخدامك لخدمة الحجز، فإنك تقرّ بموافقتك على هذه الشروط والأحكام.
-            </div>
-          </div>
-
-          <div class="check">
-            <input id="agree" type="checkbox" required />
-            <div>
-              <b>أوافق على الشروط والأحكام</b>
-              <small>لا يمكن إرسال الطلب عبر واتساب بدون الموافقة.</small>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button id="waBtn" class="btn btn-primary" type="submit" disabled>
-              تأكيد الحجز عبر واتساب
-              <span aria-hidden="true">✦</span>
-            </button>
-
-            <button class="btn btn-ghost" type="button" id="resetBtn">مسح البيانات</button>
-          </div>
-
-          <div class="hint" id="hint">
-            سيتم فتح واتساب برسالة جاهزة تحتوي على تفاصيل الحجز.
-          </div>
-        </form>
-      </section>
-    </div>
+  <div class="brand">
+    <div class="logo"></div>
+    <b>LANO</b>
   </div>
 
-<script>
-  /********************
-   * LANO Reservations
-   * Front-end (LocalStorage) + WhatsApp Redirect
-   ********************/
+  <div class="grid">
+    <section class="hero">
+      <h1>احجز طاولتك واستمتع بتجربة راقية</h1>
+      <p>
+        تجربة حجز بسيطة وسريعة — نؤكد تفاصيل حجزك عبر واتساب خلال لحظات.
+        يرجى تعبئة البيانات بدقة لضمان أفضل خدمة.
+      </p>
+    </section>
 
-  // ضع رقم واتساب الرسمي للمطعم هنا بدون "+"
-  // مثال: "9665XXXXXXXX"
-  const RESTAURANT_WA = "9665XXXXXXXX";
+    <section class="card">
+      <h2>نموذج حجز الطاولة</h2>
+
+      <form id="bookingForm">
+        <div class="form">
+          <div>
+            <label>الاسم الكامل</label>
+            <input id="fullName" class="field" required>
+          </div>
+          <div>
+            <label>رقم الجوال</label>
+            <input id="phone" class="field" required>
+          </div>
+          <div>
+            <label>عدد الضيوف</label>
+            <input id="guests" type="number" min="1" value="2" class="field">
+          </div>
+          <div>
+            <label>تاريخ الحجز</label>
+            <input id="date" type="date" class="field" required>
+          </div>
+          <div>
+            <label>وقت الحجز</label>
+            <input id="time" type="time" class="field" required>
+          </div>
+          <div class="span2">
+            <label>ملاحظات خاصة (اختياري)</label>
+            <textarea id="notes" class="field"></textarea>
+          </div>
+        </div>
+
+        <div class="terms">
+          <b>الشروط والأحكام العامة – حجز الطاولات</b><br><br>
+          يتم استقبال الحجوزات حسب توفر الأماكن في المطعم.<br>
+          في حال التأخير لأكثر من 15 دقيقة دون إشعار يحق للإدارة إلغاء الحجز.<br>
+          يمكن تعديل أو إلغاء الحجز قبل الموعد بوقت كافٍ.<br>
+          الالتزام بعدد الضيوف المحدد وأي تغيير يخضع للتوفر.<br>
+          المطعم غير مسؤول عن المقتنيات الشخصية.<br>
+          باستخدامك للخدمة فإنك تقر بموافقتك على هذه الشروط.
+        </div>
+
+        <div class="check">
+          <input id="agree" type="checkbox">
+          <label>أوافق على الشروط والأحكام</label>
+        </div>
+
+        <div class="actions">
+          <button id="waBtn" class="btn btn-primary" disabled>
+            تأكيد الحجز عبر واتساب
+          </button>
+          <button type="reset" class="btn btn-ghost">مسح</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+
+<script>
+  // رقم واتساب الرسمي لمطعم LANO
+  const RESTAURANT_WA = "966582003125"; // ← هذا السطر فقط لتغيير الرقم
 
   const STORAGE_KEY = "lano_reservations_v1";
 
-  const $ = (id) => document.getElementById(id);
+  const form = document.getElementById("bookingForm");
+  const agree = document.getElementById("agree");
+  const waBtn = document.getElementById("waBtn");
 
-  const form = $("bookingForm");
-  const agree = $("agree");
-  const waBtn = $("waBtn");
-  const resetBtn = $("resetBtn");
+  agree.onchange = () => waBtn.disabled = !agree.checked;
 
-  const fullName = $("fullName");
-  const phone = $("phone");
-  const guests = $("guests");
-  const date = $("date");
-  const time = $("time");
-  const notes = $("notes");
-
-  // Set min date = today (local)
-  (function initDateMin(){
-    const now = new Date();
-    const yyyy = now.getFullYear();
-    const mm = String(now.getMonth()+1).padStart(2,"0");
-    const dd = String(now.getDate()).padStart(2,"0");
-    date.min = `${yyyy}-${mm}-${dd}`;
-  })();
-
-  function getReservations(){
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    } catch {
-      return [];
-    }
-  }
-
-  function saveReservation(res){
-    const list = getReservations();
-    list.unshift(res);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  }
-
-  function sanitizePhone(raw){
-    // يبقي الأرقام فقط
-    return (raw || "").replace(/[^\d]/g, "");
-  }
-
-  function formatWaMessage(r){
-    // رسالة جاهزة للواتساب
-    const lines = [
-      "مرحباً LANO 🌟",
-      "أود حجز طاولة بالبيانات التالية:",
-      "",
-      `الاسم: ${r.fullName}`,
-      `رقم الجوال: ${r.phone}`,
-      `عدد الضيوف: ${r.guests}`,
-      `التاريخ: ${r.date}`,
-      `الوقت: ${r.time}`,
-      `الملاحظات: ${r.notes ? r.notes : "—"}`,
-      "",
-      "شكراً لكم"
-    ];
-    return lines.join("\n");
-  }
-
-  function updateButtonState(){
-    waBtn.disabled = !agree.checked;
-  }
-
-  agree.addEventListener("change", updateButtonState);
-
-  resetBtn.addEventListener("click", () => {
-    form.reset();
-    updateButtonState();
-  });
-
-  form.addEventListener("submit", (e) => {
+  form.onsubmit = e => {
     e.preventDefault();
 
-    const reservation = {
-      id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()),
-      createdAt: new Date().toISOString(),
-      status: "جديد",
-      fullName: fullName.value.trim(),
-      phone: sanitizePhone(phone.value),
-      guests: Number(guests.value || 1),
+    const r = {
+      fullName: fullName.value,
+      phone: phone.value,
+      guests: guests.value,
       date: date.value,
       time: time.value,
-      notes: notes.value.trim()
+      notes: notes.value || "—",
+      status: "جديد"
     };
 
-    // حفظ محلي لعرضه في لوحة الإدارة
-    saveReservation(reservation);
+    const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    list.unshift(r);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 
-    // فتح واتساب مع رسالة جاهزة
-    const text = encodeURIComponent(formatWaMessage(reservation));
-    const waUrl = `https://wa.me/${RESTAURANT_WA}?text=${text}`;
+    const msg = encodeURIComponent(
+`مرحباً LANO 🌟
+الاسم: ${r.fullName}
+الجوال: ${r.phone}
+عدد الضيوف: ${r.guests}
+التاريخ: ${r.date}
+الوقت: ${r.time}
+الملاحظات: ${r.notes}`
+    );
 
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-  });
-
-  updateButtonState();
+    window.open(`https://wa.me/${RESTAURANT_WA}?text=${msg}`, "_blank");
+  };
 </script>
 </body>
 </html>
+
