@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LANO | لوحة إدارة الحجوزات</title>
+
+  <style>
+    :root{
+      --bg:#070607;
+      --card:#0d0a0b;
+      --stroke: rgba(255,255,255,.10);
+      --text:#f7f4f5;
+      --muted: rgba(255,255,255,.70);
+      --gold:#d6b56b;
+      --shadow: 0 25px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Tahoma, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(90,15,29,.55), transparent 55%),
+        radial-gradient(1000px 650px at 85% 25%, rgba(214,181,107,.20), transparent 60%),
+        linear-gradient(180deg, #050405 0%, #070607 100%);
+      min-height:100vh;
+    }
+    .wrap{max-width:1200px; margin:0 auto; padding:28px 16px 56px}
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      padding:10px 12px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      backdrop-filter: blur(10px);
+    }
+    .logo{
+      width:36px; height:36px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--gold), rgba(214,181,107,.25) 55%, rgba(90,15,29,.55) 100%);
+      box-shadow: 0 10px 25px rgba(214,181,107,.15);
+      border:1px solid rgba(214,181,107,.35);
+    }
+    .brand b{letter-spacing:.20em}
+    .brand small{display:block; color:var(--muted); margin-top:2px}
+
+    .btn{
+      border:none;
+      border-radius: 999px;
+      padding:12px 14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.18s;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:42px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--text);
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-gold{
+      background: linear-gradient(135deg, rgba(214,181,107,.95), rgba(214,181,107,.55));
+      color:#1b1415;
+      border:none;
+      box-shadow: 0 18px 40px rgba(214,181,107,.18);
+    }
+    .btn-gold:disabled{opacity:.55; cursor:not-allowed; transform:none; box-shadow:none}
+
+    .card{
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      padding:18px;
+      backdrop-filter: blur(12px);
+    }
+
+    .row{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:end;
+    }
+    label{
+      display:block;
+      font-size:13px;
+      color:rgba(255,255,255,.78);
+      margin-bottom:7px;
+    }
+    .field{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(6,5,6,.55);
+      border-radius:16px;
+      padding:11px 12px;
+      color:var(--text);
+      outline:none;
+      transition:.2s;
+      min-width: 190px;
+    }
+    .field:focus{
+      border-color: rgba(214,181,107,.55);
+      box-shadow: 0 0 0 4px rgba(214,181,107,.12);
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      margin-top:14px;
+    }
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      min-width: 980px;
+      background: rgba(6,5,6,.35);
+    }
+    th, td{
+      padding:12px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      vertical-align:top;
+      font-size:14px;
+    }
+    th{
+      position:sticky; top:0;
+      background: rgba(13,10,11,.92);
+      backdrop-filter: blur(10px);
+      text-align:right;
+      font-size:13px;
+      color: rgba(255,255,255,.85);
+      letter-spacing:.02em;
+      cursor:pointer;
+      user-select:none;
+    }
+    tr:hover td{background: rgba(214,181,107,.04)}
+    .muted{color:var(--muted); font-size:12px; line-height:1.6}
+
+    .status{
+      border-radius:999px;
+      padding:7px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight:800;
+      min-width: 120px;
+    }
+
+    .login{
+      max-width:520px;
+      margin: 40px auto 0;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      .kpis{grid-template-columns: repeat(2, 1fr);}
+    }
+    .kpi{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .kpi b{display:block; font-size:18px}
+    .kpi small{color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <b>LANO</b>
+          <small>Admin • Reservations</small>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="./index.html">صفحة العميل</a>
+        <button class="btn" id="logoutBtn" style="display:none">تسجيل خروج</button>
+      </div>
+    </div>
+
+    <!-- Login Card -->
+    <section id="loginSection" class="card login">
+      <h2 style="margin:0 0 10px">تسجيل دخول الإدارة</h2>
+      <div class="muted" style="margin-bottom:14px">
+        حماية أساسية للوحة الإدارة. (لأمان قوي فعلي، ننقل المصادقة إلى خادم/فايربيس).
+      </div>
+
+      <div class="split">
+        <div>
+          <label for="adminUser">اسم المستخدم</label>
+          <input id="adminUser" class="field" type="text" placeholder="admin" value="admin" />
+        </div>
+        <div>
+          <label for="adminPass">كلمة المرور</label>
+          <input id="adminPass" class="field" type="password" placeholder="••••••••" />
+        </div>
+        <button class="btn btn-gold" id="loginBtn">دخول</button>
+        <div class="muted" id="loginHint"></div>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashSection" style="display:none">
+      <div class="card">
+        <h2 style="margin:0 0 10px">لوحة إدارة الحجوزات</h2>
+        <div class="muted">ترتيب حسب التاريخ/الوقت • عرض حجوزات اليوم • تغيير الحالة • بحث سريع</div>
+
+        <div class="kpis" id="kpis"></div>
+
+        <div class="row" style="margin-top:14px">
+          <div>
+            <label for="filterDate">عرض يوم محدد</label>
+            <input id="filterDate" class="field" type="date" />
+          </div>
+
+          <div>
+            <label for="filterStatus">الحالة</label>
+            <select id="filterStatus" class="field">
+              <option value="">الكل</option>
+              <option value="جديد">جديد</option>
+              <option value="مؤكد">مؤكد</option>
+              <option value="ملغي">ملغي</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="search">بحث (اسم/رقم)</label>
+            <input id="search" class="field" type="text" placeholder="اكتب للبحث..." />
+          </div>
+
+          <div style="display:flex; gap:10px; align-items:end; flex-wrap:wrap">
+            <button class="btn" id="todayBtn">حجوزات اليوم</button>
+            <button class="btn" id="clearFiltersBtn">إلغاء الفلاتر</button>
+            <button class="btn" id="exportBtn">تصدير CSV</button>
+            <button class="btn" id="clearAllBtn">مسح كل الحجوزات</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="fullName">الاسم</th>
+                <th data-sort="phone">رقم الجوال</th>
+                <th data-sort="date">التاريخ</th>
+                <th data-sort="time">الوقت</th>
+                <th data-sort="guests">عدد الضيوف</th>
+                <th>الملاحظات</th>
+                <th data-sort="status">حالة الحجز</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="muted" style="margin-top:12px">
+          * التخزين حالياً محلي (نفس الجهاز/المتصفح). إذا تبغى إدارة مركزية للموظفين، ننقلها لـ Google Sheets أو Firebase.
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script>
+  /********************
+   * Admin Dashboard (LocalStorage)
+   ********************/
+  const STORAGE_KEY = "lano_reservations_v1";
+  const AUTH_KEY = "lano_admin_authed_v1";
+
+  // بيانات دخول بسيطة (غيّرها فوراً)
+  const ADMIN_USER = "admin";
+  const ADMIN_PASS = "LANO@2025"; // غيّر كلمة المرور
+
+  const $ = (id) => document.getElementById(id);
+
+  const loginSection = $("loginSection");
+  const dashSection  = $("dashSection");
+  const loginBtn     = $("loginBtn");
+  const logoutBtn    = $("logoutBtn");
+  const loginHint    = $("loginHint");
+
+  const adminUser = $("adminUser");
+  const adminPass = $("adminPass");
+
+  const filterDate = $("filterDate");
+  const filterStatus = $("filterStatus");
+  const search = $("search");
+  const todayBtn = $("todayBtn");
+  const clearFiltersBtn = $("clearFiltersBtn");
+  const exportBtn = $("exportBtn");
+  const clearAllBtn = $("clearAllBtn");
+
+  const tbody = $("tbody");
+  const kpis = $("kpis");
+
+  let sortBy = "date";
+  let sortDir = "asc"; // asc | desc
+
+  function getAll(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+    catch { return []; }
+  }
+  function setAll(list){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }
+
+  function isAuthed(){
+    return localStorage.getItem(AUTH_KEY) === "1";
+  }
+  function setAuthed(v){
+    localStorage.setItem(AUTH_KEY, v ? "1" : "0");
+  }
+
+  function showDash(){
+    loginSection.style.display = "none";
+    dashSection.style.display = "block";
+    logoutBtn.style.display = "inline-flex";
+    render();
+  }
+  function showLogin(){
+    loginSection.style.display = "block";
+    dashSection.style.display = "none";
+    logoutBtn.style.display = "none";
+  }
+
+  loginBtn.addEventListener("click", () => {
+    const u = (adminUser.value || "").trim();
+    const p = (adminPass.value || "").trim();
+
+    if(u === ADMIN_USER && p === ADMIN_PASS){
+      setAuthed(true);
+      loginHint.textContent = "";
+      showDash();
+    }else{
+      loginHint.textContent = "بيانات الدخول غير صحيحة.";
+    }
+  });
+
+  logoutBtn.addEventListener("click", () => {
+    setAuthed(false);
+    showLogin();
+  });
+
+  function todayISO(){
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,"0");
+    const dd = String(d.getDate()).padStart(2,"0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  todayBtn.addEventListener("click", () => {
+    filterDate.value = todayISO();
+    render();
+  });
+
+  clearFiltersBtn.addEventListener("click", () => {
+    filterDate.value = "";
+    filterStatus.value = "";
+    search.value = "";
+    render();
+  });
+
+  [filterDate, filterStatus, search].forEach(el => {
+    el.addEventListener("input", render);
+    el.addEventListener("change", render);
+  });
+
+  function normalize(s){ return (s || "").toString().toLowerCase(); }
+
+  function sortValue(item, key){
+    if(key === "guests") return Number(item.guests || 0);
+    if(key === "date") return (item.date || "");
+    if(key === "time") return (item.time || "");
+    return (item[key] || "").toString();
+  }
+
+  function applyFilters(list){
+    const d = filterDate.value;
+    const st = filterStatus.value;
+    const q = normalize(search.value);
+
+    return list.filter(r => {
+      const okDate = !d || r.date === d;
+      const okSt = !st || r.status === st;
+      const okQ = !q || normalize(r.fullName).includes(q) || normalize(r.phone).includes(q);
+      return okDate && okSt && okQ;
+    });
+  }
+
+  function applySort(list){
+    const arr = [...list];
+    arr.sort((a,b) => {
+      const av = sortValue(a, sortBy);
+      const bv = sortValue(b, sortBy);
+      if(av < bv) return sortDir === "asc" ? -1 : 1;
+      if(av > bv) return sortDir === "asc" ? 1 : -1;
+      return 0;
+    });
+    return arr;
+  }
+
+  function renderKPIs(all){
+    const today = todayISO();
+    const total = all.length;
+    const todayCount = all.filter(x => x.date === today).length;
+    const newCount = all.filter(x => x.status === "جديد").length;
+    const confirmed = all.filter(x => x.status === "مؤكد").length;
+
+    kpis.innerHTML = `
+      <div class="kpi"><b>${total}</b><small>إجمالي الحجوزات</small></div>
+      <div class="kpi"><b>${todayCount}</b><small>حجوزات اليوم</small></div>
+      <div class="kpi"><b>${newCount}</b><small>جديد</small></div>
+      <div class="kpi"><b>${confirmed}</b><small>مؤكد</small></div>
+    `;
+  }
+
+  function render(){
+    const all = getAll();
+    renderKPIs(all);
+
+    const filtered = applyFilters(all);
+    const sorted = applySort(filtered);
+
+    tbody.innerHTML = sorted.map(r => `
+      <tr>
+        <td>${escapeHtml(r.fullName || "")}</td>
+        <td>${escapeHtml(r.phone || "")}</td>
+        <td>${escapeHtml(r.date || "")}</td>
+        <td>${escapeHtml(r.time || "")}</td>
+        <td>${Number(r.guests || 0)}</td>
+        <td>${escapeHtml(r.notes || "—")}</td>
+        <td>
+          <select class="status" data-id="${r.id}">
+            <option value="جديد"   ${r.status==="جديد"?"selected":""}>جديد</option>
+            <option value="مؤكد"  ${r.status==="مؤكد"?"selected":""}>مؤكد</option>
+            <option value="ملغي"  ${r.status==="ملغي"?"selected":""}>ملغي</option>
+          </select>
+        </td>
+      </tr>
+    `).join("");
+
+    // bind status change
+    document.querySelectorAll("select.status").forEach(sel => {
+      sel.addEventListener("change", () => {
+        const id = sel.getAttribute("data-id");
+        const value = sel.value;
+        const list = getAll();
+        const idx = list.findIndex(x => x.id === id);
+        if(idx >= 0){
+          list[idx].status = value;
+          setAll(list);
+          render();
+        }
+      });
+    });
+  }
+
+  // Click-to-sort on headers
+  document.querySelectorAll("th[data-sort]").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.getAttribute("data-sort");
+      if(sortBy === key){
+        sortDir = (sortDir === "asc") ? "desc" : "asc";
+      }else{
+        sortBy = key;
+        sortDir = "asc";
+      }
+      render();
+    });
+  });
+
+  exportBtn.addEventListener("click", () => {
+    const all = applySort(applyFilters(getAll()));
+    const headers = ["الاسم","رقم الجوال","التاريخ","الوقت","عدد الضيوف","الملاحظات","الحالة","تاريخ الإنشاء"];
+    const rows = all.map(r => [
+      r.fullName||"",
+      r.phone||"",
+      r.date||"",
+      r.time||"",
+      r.guests||"",
+      (r.notes||""),
+      r.status||"",
+      r.createdAt||""
+    ]);
+
+    const csv = [headers, ...rows]
+      .map(row => row.map(cell => `"${String(cell).replaceAll('"','""')}"`).join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "LANO-Reservations.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  clearAllBtn.addEventListener("click", () => {
+    const ok = confirm("تأكيد مسح جميع الحجوزات؟");
+    if(!ok) return;
+    setAll([]);
+    render();
+  });
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // init
+  if(isAuthed()){
+    showDash();
+  }else{
+    showLogin();
+  }
+</script>
+</body>
+</html>
