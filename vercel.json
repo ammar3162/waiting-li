@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "src": "/admin.html", "dest": "/admin.html" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
