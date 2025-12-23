@@ -3,12 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- تحويل مباشر إلى صفحة الإدارة -->
-  <script>
-    location.replace("/admin.html");
-  </script>
-
   <title>LANO | حجز الطاولات</title>
   <meta name="description" content="احجز طاولتك في LANO واستمتع بتجربة راقية. تأكيد الحجز عبر واتساب." />
 
@@ -191,7 +185,9 @@
 </div>
 
 <script>
-  const RESTAURANT_WA = "966582003125";
+  // رقم واتساب الرسمي لمطعم LANO
+  const RESTAURANT_WA = "966582003125"; // غيّر الرقم هنا إذا لزم
+
   const STORAGE_KEY = "lano_reservations_v1";
 
   const form = document.getElementById("bookingForm");
@@ -232,5 +228,6 @@
 </script>
 </body>
 </html>
+
 
 
